@@ -13,6 +13,10 @@
        }
        public function Empleados()
        {
+        $read = $_SESSION["permisoMod"]['r']; 
+        if ($read == 0) {
+         header('Location:'.base_url().'dashboard');
+        }
         $data['page_tag'] = "Empleados";
         $data['page_title'] = "EMPLEADOS <small>Yakkar Eventos</small>";
         $data['page_name'] = "empleados";
