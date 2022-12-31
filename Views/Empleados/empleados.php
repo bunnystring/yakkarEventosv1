@@ -1,19 +1,13 @@
-
-<?php headerAdmin($data); ?>
-<main class="app-content">
-<?php
-    getModal('modalEmpleados',$data);
-    $read = $_SESSION["permisoMod"]['r'];
-    $writing = $_SESSION["permisoMod"]['w'];
-    $update = $_SESSION["permisoMod"]['u'];
-    $delete = $_SESSION["permisoMod"]['d'];
-    if ($read == 0) {
+<?php 
+  headerAdmin($data); 
+  getModal('modalEmpleados',$data);
+  $read = $_SESSION["permisoMod"]['r'];
+  $writing = $_SESSION["permisoMod"]['w'];
+  $update = $_SESSION["permisoMod"]['u'];
+  $delete = $_SESSION["permisoMod"]['d'];
+  // dep($_SESSION['permisoMod']);
 ?>
-      <p>Acceso restringido</p>
-      <?php 
-    }else{
-      // dep($_SESSION['permisoMod']);
-      ?>
+<main class="app-content">
       <div class="app-title">
         <div>
           <h1><i class="app-menu__icon fa-solid fa-people-arrows"></i> <?= $data['page_title']?>
@@ -52,7 +46,6 @@
           </div>
         </div>
       </div>
-      <?php } ?>
     </main>
     <?php footerAdmin($data); ?>
   

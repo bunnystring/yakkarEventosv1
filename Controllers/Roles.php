@@ -9,10 +9,15 @@
 			if (empty($_SESSION['login'])) {
 			   header('Location:'.base_url().'login');
 			}
+			getPermisos(2);
 		}
 
 		public function Roles()
 		{
+			$read = $_SESSION["permisoMod"]['r']; 
+       		if ($read == 0) {
+         		header('Location:'.base_url().'dashboard');
+        	}
 			$data['page_id'] = 3;
 			$data['page_tag'] = "Roles Usuario";
 			$data['page_name'] = "roles";
@@ -23,6 +28,9 @@
 
 		public function getRoles()
 		{
+			$btnView = '';
+            $btnEdit = '';
+            $btnDelete = '';
 			$arrData = $this->model->selectRoles();
 
 			for ($i=0; $i < count($arrData); $i++) {
@@ -33,12 +41,15 @@
 				}else{
 					$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
 				}
+				 if ($_SESSION["permisoMod"]['u'] == 1) {
+					$btnView = '<button class="btn btn-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['idrol'].')" title="Permisos"><i class="fas fa-key"></i></button>';
+					$btnEdit = ' <button class="btn btn-warning btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['idrol'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+				 }
+				 if ($_SESSION["permisoMod"]['d'] == 1) {
+					$btnDelete = '<button class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['idrol'].')" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
+				 }
 
-				 $arrData[$i]['options'] = '<div class="text-center">
-            <button class="btn btn-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['idrol'].')" title="Permisos"><i class="fas fa-key"></i></button>
-            <button class="btn btn-warning btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['idrol'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-            <button class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['idrol'].')" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-            </div>';
+				 $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
 			}
 			echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
 			die();
