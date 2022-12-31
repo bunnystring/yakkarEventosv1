@@ -7,7 +7,7 @@
 // const BASE_URL = "https://managementteck.com/yakkar/";
 
 //Local
-const BASE_URL = "http://localhost/yakkar/";
+const BASE_URL = "http://localhost/yakkarEventosv1/";
 
 
 //***ZONA HORARIA COLOMBIA***/
