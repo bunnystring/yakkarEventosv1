@@ -98,6 +98,9 @@
        {
          $arrData = $this->model->selectEmpleados();
          for ($i=0; $i < count($arrData); $i++) {
+            $btnView = '';
+            $btnEdit = '';
+            $btnDelete = '';
 
 				if($arrData[$i]['estado'] == 1)
 				{
@@ -105,11 +108,16 @@
 				}else{
 					$arrData[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
 				}
-            $arrData[$i]['options'] = '<div class="text-center">
-				<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewEmpleado('.$arrData[$i]['id_empleado'].')" title="Ver Empleado"><i class="far fa-eye"></i></button>
-				<button class="btn btn-warning  btn-sm btnEditUsuario" onClick="fntEditEmpleados('.$arrData[$i]['id_empleado'].')" title="Editar Empleado"><i class="fas fa-pencil-alt"></i></button>
-				<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelEmpleado('.$arrData[$i]['id_empleado'].')" title="Eliminar Empleado"><i class="far fa-trash-alt"></i></button>
-				</div>';
+            if ($_SESSION["permisoMod"]['r'] == 1) {
+               $btnView = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewEmpleado('.$arrData[$i]['id_empleado'].')" title="Ver Empleado"><i class="far fa-eye"></i></button>';
+            }
+            if ($_SESSION["permisoMod"]['u'] == 1) {
+               $btnEdit = '<button class="btn btn-warning  btn-sm btnEditUsuario" onClick="fntEditEmpleados('.$arrData[$i]['id_empleado'].')" title="Editar Empleado"><i class="fas fa-pencil-alt"></i></button>';
+            }
+            if ($_SESSION["permisoMod"]['d'] == 1) {
+               $btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelEmpleado('.$arrData[$i]['id_empleado'].')" title="Eliminar Empleado"><i class="far fa-trash-alt"></i></button>';
+            }
+            $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
 			}
 			echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
 			die();
