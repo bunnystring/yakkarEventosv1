@@ -1,18 +1,27 @@
 
-<?php headerAdmin($data); 
+<?php headerAdmin($data); ?>
+<main class="app-content">
+<?php
     getModal('modalEmpleados',$data);
+    $read = $_SESSION["permisoMod"]['r'];
+    $writing = $_SESSION["permisoMod"]['w'];
+    $update = $_SESSION["permisoMod"]['u'];
+    $delete = $_SESSION["permisoMod"]['d'];
+    if ($read == 0) {
 ?>
-    <main class="app-content">
+      <p>Acceso restringido</p>
       <?php 
-      dep($_SESSION['permisos']);
-      dep($_SESSION['permisoMod']);
+    }else{
+      // dep($_SESSION['permisoMod']);
       ?>
       <div class="app-title">
         <div>
           <h1><i class="app-menu__icon fa-solid fa-people-arrows"></i> <?= $data['page_title']?>
+          <?php if ($writing == 1) {?>
           <button class="btn btn-success" type="button" onclick="openModal();"><i class="fa-solid fa-plus"></i> Nuevo</button>
+          <?php } ?>
           </h1>
-          <p>Start a beautiful journey here</p>
+          <p>Empieza Modulo Empleados</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -43,6 +52,7 @@
           </div>
         </div>
       </div>
+      <?php } ?>
     </main>
     <?php footerAdmin($data); ?>
   
